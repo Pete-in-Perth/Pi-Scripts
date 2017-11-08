@@ -20,14 +20,15 @@ GPIO.setup(PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 # Our function on what to do when the button is pressed  
 def Shutdown():  
 	print("Shutdown initiated")
+	time.sleep(0.5)
 	os.system("sudo shutdown -h now")  
 
 def Reboot():  
 	print("Reboot initiated")
+	time.sleep(0.5)
 	os.system("sudo reboot")  
 	
 def BTime(channel):
-	print("event")
 	t = 0
 	while GPIO.input(channel) == GPIO.LOW:
 		time.sleep(0.1)
