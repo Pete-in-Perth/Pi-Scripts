@@ -18,26 +18,28 @@ GPIO.setup(PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 
 # Our function on what to do when the button is pressed  
-def Shutdown(channel):  
+def Shutdown():  
 	print("Shutdown initiated")
-	#os.system("sudo shutdown -h now")  
+	os.system("sudo shutdown -h now")  
 
-def Reboot(channel):  
+def Reboot():  
 	print("Reboot initiated")
-	#os.system("sudo reboot")  
+	os.system("sudo reboot")  
 	
 def BTime(channel):
+	print("event")
 	t = 0
 	while GPIO.input(channel) == GPIO.LOW:
-		time.sleep(10)
-		t += 10
-		if t > 2000: # if button is held long enough
+		time.sleep(0.1)
+		t += 0.1
+		if t > 2: # if button is held long enough
 			Shutdown()
-	Reboot() # if button is released early
+	if t > 0.2: 
+		Reboot() # if button is released early
 	
  
 # Add our function to execute when the button pressed event happens  
-GPIO.add_event_detect(PIN, GPIO.FALLING, callback = BTime, bouncetime = 2000)  
+GPIO.add_event_detect(PIN, GPIO.FALLING, callback = BTime)  
  
 # Now wait!  
 while 1:  
