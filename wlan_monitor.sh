@@ -4,12 +4,20 @@
 # source: https://www.raspberrypi.org/forums/viewtopic.php?t=16054#p165196
 
 while true ; do
-	if ifconfig wlan0 | grep -q "inet addr:" ; then
-                echo "Connected."
-		sleep 30
-	else
-		echo "Network connection down! Attempting reconnection."
-		ifup --force wlan0
+
+
+	ping -c4 192.168.1.254 > /dev/null
+	    if [ $? != 0 ]
+	    then
+		echo "No network connection, restarting wlan0"
+		/sbin/ifdown 'wlan0'
+		sleep 5
+		/sbin/ifup --force 'wlan0'
 		sleep 15
-	fi
+	    else
+		echo "Connection seems fine"
+		sleep 30
+	    fi
+    
+
 done
