@@ -6,7 +6,7 @@
 while true ; do
 
 
-	ping -c4 192.168.1.254 > /dev/null
+	ping -c4 1.1.1.1 > /dev/null
 	    if [ $? != 0 ]
 	    then
 		echo "No network connection, restarting wlan0"
